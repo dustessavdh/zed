@@ -9248,8 +9248,9 @@ impl Editor {
                         ),
                     );
                 }
-                self.display_map
-                    .update(cx, |display_map, _| display_map.replace_blocks(new_styles));
+                self.display_map.update(cx, |display_map, cx| {
+                    display_map.replace_blocks(new_styles, cx)
+                });
             }
         }
     }
@@ -9611,7 +9612,7 @@ impl Editor {
         cx: &mut ViewContext<Self>,
     ) {
         self.display_map
-            .update(cx, |display_map, _| display_map.replace_blocks(blocks));
+            .update(cx, |display_map, cx| display_map.replace_blocks(blocks, cx));
         if let Some(autoscroll) = autoscroll {
             self.request_autoscroll(autoscroll, cx);
         }
